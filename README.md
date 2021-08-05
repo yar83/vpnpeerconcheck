@@ -1,8 +1,8 @@
 # Service shell scripts
 A collection of shell scripts for various every day routines and monitoring operations.
 
-[hosts_con_check.sh](#hosts_con_check-sh)<br>
-[send_msg_telegram.sh](#send_msg_telegram-sh)<br>
+[hosts_con_check.sh](#hosts_con_check.sh)<br>
+[send_msg_telegram.sh](#send_msg_telegram.sh)<br>
 
 ##### hosts_con_check.sh
 continuously check connection to each host from array of hosts, log data and send corresponding messages to Telegram.
