@@ -97,7 +97,7 @@ print_help() {
 ######################################################################
 next_day_stamp() {
 	if (( $(date --date="$today" "+%s") < $(date --date="$(date "+%D")" "+%s") )) ; then
-		echo "__________ New day: $(date "+%d.%m.%Y %H:%M") _________" >> $LOGFILE
+		echo "__________ New day: $(date "+%d.%m.%Y %H:%M") _________" >> "$LOGFILE"
 		today=$(date "+%D")
 	fi
 }
@@ -120,13 +120,13 @@ next_day_stamp() {
 set_init_state() {
   if /bin/ping -c${PINGCOUNT} -w${PINGTIMEOUT} "$1" > /dev/null; then
     IPs[$1]="on"
-    echo "Box $1 initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> $LOGFILE
+    echo "Box $1 initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     if [[ $VERBOSE ]] ; then
       printf "%s\n" "Box $1 initial state is online"
     fi
   else
     IPs[$1]="off"
-    echo "Box $1 initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> $LOGFILE
+    echo "Box $1 initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     if [[ $VERBOSE ]] ; then
       printf "%s\n" "Box $1 initial state is offline"
     fi
@@ -175,7 +175,7 @@ check_con() {
       else
         unset IPs_off[$1]
       fi
-      echo "Box $1 is online from offline $(date +"%d.%m.%Y %H:%M:%S")" >> $LOGFILE
+      echo "Box $1 is online from offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     else
       if [[ $VERBOSE ]]; then
         printf "%s\n" "Box $1 is still online"
@@ -190,7 +190,7 @@ check_con() {
       if [[ $VERBOSE ]]; then
         printf "%s\n" "$1 now offline, was online"
       fi
-      echo "Box $1 is offline from online $(date +"%d.%m.%Y %H:%M:%S")" >> $LOGFILE
+      echo "Box $1 is offline from online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     else
       if [[ $VERBOSE ]]; then
         printf "%s\n" "Box $1 is still offline"
@@ -225,13 +225,13 @@ main() {
   IPs=(["10.0.0.2"]="on" ["10.0.0.7"]="on" ["10.0.0.8"]="on" ["10.0.0.9"]="on")
 
   # set initial status of each IP addr
-  for ip in ${!IPs[@]}; do
+  for ip in "${!IPs[@]}"; do
     set_init_state $ip
   done
 
   while :; do
     next_day_stamp
-    for ip in ${!IPs[@]}; do
+    for ip in "${!IPs[@]}"; do
       check_con $ip
     done
   done
