@@ -12,3 +12,4 @@ send a message with optional content via your own Telegram bot (use your credits
 ### Tasks
 - [ ] Validity check for IPv4 dot-decimal IP addresses
 - [ ] Stand alone options parser
+- [ ] Check whether port on remote host still open
