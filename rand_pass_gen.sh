@@ -59,7 +59,7 @@ function generate_string() {
 
 ####################################################
 # Check whether the current script first argument
-# is integet number between 6 and 30. 
+# is integer number between 6 and 30. 
 # Globals:
 #   None
 # Arguments:
