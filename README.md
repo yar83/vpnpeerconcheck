@@ -16,6 +16,6 @@ generate random passphrase with minimun one lowercase, one uppercase, and one di
 - [ ] add argument parser to parse -h or --help as command to pring help
 
 ### Tasks
-- [ ] Validity check for IPv4 dot-decimal IP addresses
+- [ ] ~~Validity check for IPv4 dot-decimal IP addresses~~
 - [ ] Stand alone options parser
 - [ ] Check whether port on remote host still open
