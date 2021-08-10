@@ -38,7 +38,7 @@ function generate_string() {
   local -r lows='abcdefghijklmnopqrstuvwxyz'
   local -r caps='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   local -r specials='!@#$%^&*?'
-  local -r all='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  local -r all='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*?'
 
   if [[ ${#@} -eq 1 ]]; then 
     def_length="$1"
