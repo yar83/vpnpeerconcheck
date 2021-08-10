@@ -8,8 +8,6 @@
 # desired password length.
 ####################################################
 
-# TODO(yar83): add special characters to string
-# generator
 # TODO(yar83): add help
 # TODO(yar83): add argument parser to parse -h or
 # --help as command to pring help
@@ -39,6 +37,7 @@ function generate_string() {
   local -r numbers='0123456789'
   local -r lows='abcdefghijklmnopqrstuvwxyz'
   local -r caps='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  local -r specials='!@#$%^&*?'
   local -r all='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
   if [[ ${#@} -eq 1 ]]; then 
@@ -46,12 +45,14 @@ function generate_string() {
   fi
 
   {
-    echo ${numbers:RANDOM%${#numbers}:1} $RANDOM
-    echo ${lows:RANDOM%${#lows}:1} $RANDOM
-    echo ${caps:RANDOM%${#caps}:1} $RANDOM
+    echo "${numbers:RANDOM%${#numbers}:1}"
+    echo "${lows:RANDOM%${#lows}:1}"
+    echo "${caps:RANDOM%${#caps}:1}"
+    echo "${specials:RANDOM%${#specials}:1}"
     
-    for ((i=0; i < (def_length - 3); i++)); do
-      echo ${all:RANDOM%${#all}:1} $RANDOM
+    
+    for ((i=0; i < (def_length - 4); i++)); do
+      echo "${all:RANDOM%${#all}:1}"
     done
   } | sort -R | awk '{printf "%s",$1}'
 }
@@ -85,7 +86,7 @@ function main() {
     generate_string "$1"
     exit 0
   else
-    printf "%s\n" "Length argument must be a number from 6 to 30"
+    printf '%s\n' "Length argument must be a number from 6 to 30"
     exit 1
   fi
 }
