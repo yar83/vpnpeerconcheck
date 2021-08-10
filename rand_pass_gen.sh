@@ -67,7 +67,6 @@ function generate_string() {
 # Outputs:
 #   Return "true" or "false" as a result of checking 
 ####################################################
-
 function is_first_arg_valid() {
   if [[ $1 =~ ^[6-9]|[1-2][0-9]|30$ ]]; then
     echo "true"
