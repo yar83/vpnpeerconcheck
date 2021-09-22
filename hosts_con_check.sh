@@ -87,7 +87,7 @@ print_help() {
 # Write '__________ New day: $(date "+%d.%m.%Y %H:%M") _________' to logfile
 # each midnight to visually separate log data one day from another.
 # Globals:
-#	  LOGFILE  - path to log file
+#	  LOGFILE  - path to the log file
 # Arguments:
 #	  None
 # Outputs:
