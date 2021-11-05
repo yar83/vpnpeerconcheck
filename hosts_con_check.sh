@@ -13,7 +13,7 @@ LOGFILE=/etc/wireguard/peersconnection.log
 #--- Constants start ---#
 readonly PINGCOUNT=1
 readonly PINGTIMEOUT=2
-readonly MAX_OFFLINE_PERIOD=120 # maximum host offline time in seconds before sending a warning message
+readonly MAX_OFFLINE_PERIOD=60 # maximum host offline time in seconds before sending a warning message
 #--- Constants end ---#
 
 declare -A IPs IPs_off
