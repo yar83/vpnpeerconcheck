@@ -222,7 +222,7 @@ main() {
   fi
   
   #IPs_array_build <-- function to build array of IPs (will be write)
-  IPs=(["10.0.0.2"]="on" ["10.0.0.7"]="on" ["10.0.0.8"]="on" ["10.0.0.9"]="on")
+  IPs=(["10.0.0.2"]="on" ["10.0.0.7"]="on" ["10.0.0.8"]="on" ["10.0.0.9"]="on" ["10.0.0.10"]="on")
 
   # set initial status of each IP addr
   for ip in "${!IPs[@]}"; do
