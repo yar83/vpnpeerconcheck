@@ -13,7 +13,7 @@ LOGFILE=/etc/wireguard/peersconnection.log
 #--- Constants start ---#
 readonly PINGCOUNT=1
 readonly PINGTIMEOUT=2
-readonly MAX_OFFLINE_PERIOD=120 # maximum host offline time in seconds before sending a warning message
+readonly MAX_OFFLINE_PERIOD=60 # maximum host offline time in seconds before sending a warning message
 #--- Constants end ---#
 
 declare -A IPs IPs_off
@@ -87,7 +87,7 @@ print_help() {
 # Write '__________ New day: $(date "+%d.%m.%Y %H:%M") _________' to logfile
 # each midnight to visually separate log data one day from another.
 # Globals:
-#	  LOGFILE  - path to log file
+#	  LOGFILE  - path to the log file
 # Arguments:
 #	  None
 # Outputs:
