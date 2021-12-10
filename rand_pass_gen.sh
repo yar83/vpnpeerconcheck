@@ -30,7 +30,7 @@ declare -i def_length=6
 #    String length got as the script argument
 # Outputs:
 #    An eight or passed number characters length string 
-#    contains minimum one digit, one lower and one 
+#    contains minimum one digit, one lower, and one 
 #    uppercase letter.
 ####################################################
 function generate_string() {
@@ -49,7 +49,6 @@ function generate_string() {
     echo "${lows:RANDOM%${#lows}:1}"
     echo "${caps:RANDOM%${#caps}:1}"
     echo "${specials:RANDOM%${#specials}:1}"
-    
     
     for ((i=0; i < (def_length - 4); i++)); do
       echo "${all:RANDOM%${#all}:1}"
