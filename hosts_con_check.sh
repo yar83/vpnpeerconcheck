@@ -19,7 +19,7 @@ readonly MAX_OFFLINE_PERIOD=60 # maximum host offline time in seconds before sen
 declare -A IPs IPs_off
 
 ######################################################################
-# Parse options got with script invocation
+# Parse options set with script invocation
 # Globals:
 #   PARAMS
 #   VERBOSE
@@ -134,18 +134,21 @@ set_init_state() {
 }
 
 ######################################################################
-# Briefly: check current IP addr connection. If IP is on and was on do nothing just notice if VERBOSE flag is on, if IP was
-# offline check whether warning message was sent, if message was sent, send message of IP's back from long offline.
-# If IP is off and was off, check whether long time offline period expired, if expired send warning message, if not
-# expired do nothing, just notice if VERBOSE flag is on.
+# Briefly: check current IP addr connection. If IP is on and was on do
+# nothing just notice if VERBOSE flag is on, if IP was offline check
+# whether warning message was sent, if message was sent, send message
+# of IP's back from long offline. If IP is off and was off, check
+# whether long time offline period expired, if expired send warning
+# message, if not expired do nothing, just notice if VERBOSE flag is on.
 # Globals:
 #	  PINGCOUNT 
 #   PINGTIMEOUT
 #   LOGFILE
 #   VERBOSE
-#   IPs -- associated array of all IPs. Values of keys modified during function execution.
-#   IPs_off -- associated array of all IPs currently being offline before max long time offline
-#              period is expired.
+#   IPs -- associated array of all IPs. Values of keys modified during
+#     function execution.
+#   IPs_off -- associated array of all IPs currently being offline
+#     before max long time offline period is expired.
 # Arguments:
 #	  $1 as current ip addr to connection check
 # Outputs:
