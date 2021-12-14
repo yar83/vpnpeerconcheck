@@ -14,7 +14,7 @@ if [[ -z $1 ]]; then
 fi
 
 if [[ "$#" -ne 1 ]]; then
-  printf '%s\n' "No more than one argument can be passed. Use quotes for strings with spaces. Enter -h for help"
+  printf '%s\n' "Only one argument is allowed. Use quotes for strings with spaces. Enter -h for help"
   exit 2
 fi
 
