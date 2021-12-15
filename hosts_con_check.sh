@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO(yar83): add detailed description
+
 set -o nounset
 set -o errexit
 
