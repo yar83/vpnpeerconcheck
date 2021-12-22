@@ -15,8 +15,17 @@ input_check() {
   fi
 }
 
+print_help() {
+  printf "%s\n%s\n%s\n%s\n",\
+    "Represent entered number as a product of prime numbers, up to the"\
+    "order of factors. For example, N = 1164 = 2 * 2 * 3 * 97."\
+    "Use $./prime_numbers.sh 1164 for normal mode or with options"\
+    "-h, --help to dispaly this help and exit."
+}
+
 main() {
   input_check "$@"
+  print_help
 }
 
 main "$@"
