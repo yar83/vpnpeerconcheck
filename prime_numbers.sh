@@ -8,11 +8,15 @@
 # TODO(yar83): add argument parser to parse -h or --help to print help
 # TODO(yar83): prove entered whether -h/--help or one integer number
 
-main() {
-  if [[ ${#@} -ne 1 || ! ($1 =~ ^[1-9]{1}[0-9]{,9}$) ]]; then
+input_check() {
+  if [[ ! (${#@} -eq 1 && $1 =~ '-h' || $1 =~ ^[1-9]{1}[0-9]{,9}$) ]]; then
     echo "Valid input is one integer number greater than 0"
     exit 1
   fi
+}
+
+main() {
+  input_check "$@"
 }
 
 main "$@"
