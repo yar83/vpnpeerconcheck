@@ -28,6 +28,15 @@ input_check() {
   fi
 }
 
+######################################################################
+# Prints help if script run with corresponding arguments
+# Globals:
+#   none
+# Arguments: 
+#   none
+# Outputs:
+#   Ptints to stdout help message and exit.
+######################################################################
 print_help() {
   printf "%s\n%s\n%s\n%s\n",\
     "Represent entered number as a product of prime numbers, up to the"\
