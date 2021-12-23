@@ -45,6 +45,16 @@ print_help() {
     "-h, --help to dispaly this help and exit."
 }
 
+######################################################################
+# Decompose valid argument number to product of prime factor and print
+# each factor consequently to stdout.
+# Globals:
+#   none
+# Arguments: 
+#   $1 - valid number got as script argument
+# Outputs:
+#   Print prime factors to stdout
+######################################################################
 print_primes() {
   bc <<< "
     num = $1;
