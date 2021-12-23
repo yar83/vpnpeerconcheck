@@ -12,12 +12,12 @@ continuously check connection to each host from array of hosts, log data and sen
 send a message with optional content via your own Telegram bot (use your credits).
 #### [rand_pass_gen.sh](https://github.com/yar83/shell-service-scripts/blob/main/rand_pass_gen.sh)
 generate random passphrase with minimun one lowercase, one uppercase, and one digit characters with default length of 8 characters or user defined between length between 6 or 30 characters.
-#### [prime_numbers.sh](https://github.com/yar83/shell-service-scripts/blob/main/rand_pass_gen.sh)
-represent entered number as a product of prime numbers, up to the order of factors.
-
 - [x] ~~add special characters to string generator~~
 - [ ] add help 
 - [ ] add argument parser to parse -h or --help as command to pring help
+#### [prime_numbers.sh](https://github.com/yar83/shell-service-scripts/blob/main/rand_pass_gen.sh)
+represent entered number as a product of prime numbers, up to the order of factors.
+
 
 ### Tasks
 - [ ] Validity check for IPv4 dot-decimal IP addresses
