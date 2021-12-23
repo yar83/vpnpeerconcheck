@@ -7,6 +7,9 @@
 # TODO(yar83): Add description to all functions
 # TODO(yar83): Add check whether bc is installed
 
+set -o nounset
+set -o errexit
+
 input_check() {
   if [[ ! (${#@} -eq 1 && $1 == '-h' || $1 == '--help' || $1 =~ ^[1-9]{1}[0-9]{,9}$) ]]; then
     echo "Valid input is one integer number greater than 0 or -h or --help for help"
@@ -22,9 +25,16 @@ print_help() {
     "-h, --help to dispaly this help and exit."
 }
 
+print_primes() {
+  echo "$1"
+}
+
 main() {
   input_check "$@"
-  print_help
+  case "$1" in
+    -h | --help ) print_help;;
+    * ) print_primes "$1";;
+  esac
 }
 
 main "$@"
