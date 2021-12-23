@@ -26,7 +26,24 @@ print_help() {
 }
 
 print_primes() {
-  echo "$1"
+  bc <<< "
+    num = $1;
+    while (num % 2 == 0) {
+      print 2, \" \";
+      num = num / 2;
+    }
+    
+    for (i=3; i<=sqrt(num); i = i + 2) {
+      while (num % i == 0) {
+        print i, \" \";
+        num = num / i;
+      }
+    }
+
+    if (num > 2) print num;
+    
+    print \"\n\";
+  "
 }
 
 main() {
