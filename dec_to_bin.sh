@@ -35,7 +35,7 @@ print_error() {
 # Arguments: 
 #   none
 # Outputs:
-#   Prints to stdout help message and exit.
+#   Print to stdout help message and exit.
 ######################################################################
 print_help() {
   printf "%s\n%s\n%s\n",\
