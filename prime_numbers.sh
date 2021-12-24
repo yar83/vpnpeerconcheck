@@ -35,7 +35,7 @@ check_input() {
 # Arguments: 
 #   none
 # Outputs:
-#   Ptints to stdout help message and exit.
+#   Prints to stdout help message and exit.
 ######################################################################
 print_help() {
   printf "%s\n%s\n%s\n%s\n",\
@@ -82,6 +82,7 @@ main() {
     -h | --help ) print_help;;
     * ) print_primes "$1";;
   esac
+  exit 0
 }
 
 main "$@"
