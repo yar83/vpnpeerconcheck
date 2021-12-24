@@ -6,10 +6,6 @@
 set -o nounset
 set -o errexit
 
-# print_help()
-# print_bits()
-
-
 ######################################################################
 # Validate script argument. It's valid if it's a interger decimal
 # number or -h or --help string.
@@ -33,7 +29,7 @@ print_error() {
 }
 
 ######################################################################
-# Prints help if script run with -h or --help argument
+# Print help if script run with -h or --help argument
 # Globals:
 #   none
 # Arguments: 
@@ -48,22 +44,49 @@ print_help() {
     "-h, --help to dispaly this help and exit."
 }
 
-print_bits() {
-  bc <<< "
-    num = $1;
-    bits = 1;
-    # print num, \"\n\";
-    while (num > 1) {
-      if (num % 2 == 0) {
-        bits = bits * 10 + 0;
-      } else {
-        bits = bits * 10 + 1;
-      }
-      scale=0;
-      num = num / 2;
-      print \"num=\", num, \"\n\", bits, \"\n\";
-    }
-  "
+######################################################################
+# Get decimal number converted to binary in backwards state
+# Globals: 
+#   None
+# Arguments:
+#   $1 as decimal number
+# Outputs
+#   bits of converted number in backwars state
+######################################################################
+get_reciprocal_bits() {
+  local -i num="$1"
+  local bits_string=""
+  while [ "$num" -gt 1 ]; do
+    if [ $(( num % 2 )) -eq 1 ]; then
+      bits_string=$bits_string$(echo -n "1")
+    else
+      bits_string=$bits_string$(echo -n "0")
+    fi
+    num=$((num / 2))
+    if [ "$num" -eq 1 ]; then
+      bits_string=$bits_string$(echo -n "1")
+    fi
+  done
+  echo "$bits_string"
+}
+
+######################################################################
+# Reverse bits of converted number
+# Globals: 
+#   None
+# Arguments:
+#   $1 as bits of cenverted number in backwards state
+# Outputs
+#   bits of converted number in proper order
+######################################################################
+reverse_bits() {
+  local reciprocal_bits="$1"
+  local -i reciprocal_bits_len=${#1};
+  local bits=""
+  for ((i = (reciprocal_bits_len - 1); i >= 0; i--)); do
+    bits=$bits$(echo ${reciprocal_bits:i:1})
+  done
+  echo $bits
 }
 
 main() {
@@ -74,7 +97,7 @@ main() {
 
   case "$1" in
     -h | --help ) print_help;;
-    * ) print_bits "$1";;
+    * ) echo $(reverse_bits $(get_reciprocal_bits "$1"));;
   esac
   
   exit 0
