@@ -53,7 +53,7 @@ print_help() {
 # Outputs
 #   bits of converted number in backwars state
 ######################################################################
-get_reciprocal_bits() {
+get_backwards_bits() {
   local -i num="$1"
   local bits_string=""
   while [ "$num" -gt 1 ]; do
@@ -80,11 +80,11 @@ get_reciprocal_bits() {
 #   bits of converted number in proper order
 ######################################################################
 reverse_bits() {
-  local reciprocal_bits="$1"
-  local -i reciprocal_bits_len=${#1};
+  local backwards_bits="$1"
+  local -i backwards_bits_len=${#1};
   local bits=""
-  for ((i = (reciprocal_bits_len - 1); i >= 0; i--)); do
-    bits=$bits$(echo ${reciprocal_bits:i:1})
+  for ((i = (backwards_bits_len - 1); i >= 0; i--)); do
+    bits=$bits$(echo ${backwards_bits:i:1})
   done
   echo $bits
 }
@@ -97,7 +97,7 @@ main() {
 
   case "$1" in
     -h | --help ) print_help;;
-    * ) echo $(reverse_bits $(get_reciprocal_bits "$1"));;
+    * ) echo $(reverse_bits $(get_backwards_bits "$1"));;
   esac
   
   exit 0
