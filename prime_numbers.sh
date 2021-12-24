@@ -12,7 +12,7 @@ set -o errexit
 
 ######################################################################
 # Check whether script is ran with valid arguments that can be only
-# one positive integer number or -h || --help stiring.
+# one positive integer number or -h || --help string.
 # Globals:
 #   none
 # Arguments:
