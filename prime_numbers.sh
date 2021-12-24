@@ -29,7 +29,7 @@ check_input() {
 }
 
 ######################################################################
-# Prints help if script run with corresponding arguments
+# Prints help if script run with -h or --help argument
 # Globals:
 #   none
 # Arguments: 
