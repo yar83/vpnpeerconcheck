@@ -21,7 +21,7 @@ set -o errexit
 #   Prints to stdout error message if $@ is not valid data and exit
 #   or pass by execution to next expression of main.
 ######################################################################
-input_check() {
+check_input() {
   if [[ ! (${#@} -eq 1 && $1 == '-h' || $1 == '--help' || $1 =~ ^[1-9]{1}[0-9]{,9}$) ]]; then
     echo "Valid input is one integer number greater than 0 or -h or --help for help"
     exit 1
@@ -77,7 +77,7 @@ print_primes() {
 }
 
 main() {
-  input_check "$@"
+  check_input "$@"
   case "$1" in
     -h | --help ) print_help;;
     * ) print_primes "$1";;
