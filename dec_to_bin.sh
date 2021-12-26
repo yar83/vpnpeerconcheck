@@ -17,10 +17,10 @@ set -o errexit
 #   echoes 'true' or 'false'
 ######################################################################
 is_valid_input() {
-  if [[ !(${#@} -eq 1 && $1 == '-h' || $1 == '--help' || $1 =~ ^[1-9]{1}[0-9]{,9}$) ]]; then
-    echo "false"
-  else
+  if [[ $# -eq 1 ]] && [[ $1 == '-h' || $1 == '--help' || $1 =~ ^[1-9]{1}[0-9]{,9}$ ]]; then
     echo "true"
+  else
+    echo "false"
   fi
 }
 
