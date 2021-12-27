@@ -22,7 +22,7 @@ set -o errexit
 #   or pass by execution to next expression of main.
 ######################################################################
 check_input() {
-  valid_arg_pattern='(^-h$)|(^--help$)|(^[1-9]{1}[0-9]{,9}$)'
+  valid_arg_pattern='(^-h$)|(^--help$)|(^[1-9]{1}[0-9]{0,9}$)'
   if [[ $# -eq 1 ]] && [[ $1 =~ $valid_arg_pattern ]]; then
     return 0
   else 
