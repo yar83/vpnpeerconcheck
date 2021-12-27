@@ -24,11 +24,9 @@ set -o errexit
 check_input() {
   valid_arg_pattern='(^-h$)|(^--help$)|(^[1-9]{1}[0-9]{,9}$)'
   if [[ $# -eq 1 ]] && [[ $1 =~ $valid_arg_pattern ]]; then
-    echo "true"
-    exit 0
+    return 0
   else 
-    echo "false"
-    exit 1
+    return 1
   fi
 }
 
@@ -81,10 +79,7 @@ print_primes() {
 }
 
 main() {
-  if [[ $(check_input "$@") == "false" ]]; then
-    echo "Valid input is one integer number greater than 0 or -h or --help for help"
-    exit 1
-  fi
+  check_input "$@" || { echo "Valid input is one integer number greater than 0 or -h or --help for help"; exit 1; }
 
   case "$1" in
     -h | --help ) print_help;;
