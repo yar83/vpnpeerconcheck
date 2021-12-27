@@ -62,7 +62,7 @@ print_help() {
 #   Print prime factors to stdout
 ######################################################################
 print_primes() {
-  bc <<< "
+  local primes=$(bc <<< "
     num = $1;
     while (num % 2 == 0) {
       print 2, \" \";
@@ -77,9 +77,8 @@ print_primes() {
     }
 
     if (num > 2) print num;
-    
-    print \"\n\";
-  "
+    ")
+  echo "$primes"
 }
 
 main() {
