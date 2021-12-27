@@ -30,6 +30,10 @@ check_input() {
   fi
 }
 
+print_error() {
+  echo "Valid input is one integer number greater than 0 or -h or --help for help"
+}
+
 ######################################################################
 # Prints help if script run with -h or --help argument
 # Globals:
@@ -79,7 +83,7 @@ print_primes() {
 }
 
 main() {
-  check_input "$@" || { echo "Valid input is one integer number greater than 0 or -h or --help for help"; exit 1; }
+  check_input "$@" || { print_error; exit 1; }
 
   case "$1" in
     -h | --help ) print_help;;
