@@ -6,6 +6,18 @@
 set -o nounset
 set -o errexit
 
+input_check() {
+  if [[ ${#@} -eq 1 ]] && [[ $1 =~ (^-h$)|(^--help$)|(^1{1}[0-1]{0,19}$) ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+print_error() {
+  printf 'Valid input is one positive binary number'
+}
+
 main() {
   len=${#1}
   out=0
