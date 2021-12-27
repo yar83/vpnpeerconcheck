@@ -15,10 +15,12 @@ input_check() {
 }
 
 print_error() {
-  printf 'Valid input is one positive binary number'
+  printf "Valid input is one positive binary number\n"
 }
 
 main() {
+  input_check "$@" || { print_error; exit 1; }
+
   len=${#1}
   out=0
   for ((i=0; i < $len; i++)); do
