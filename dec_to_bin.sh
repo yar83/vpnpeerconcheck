@@ -90,7 +90,7 @@ reverse_bits() {
 }
 
 main() {
-  is_valid_input $@ || print_error 2&>1 && exit 1
+  is_valid_input $@ || { print_error; exit 1; }
 
   case "$1" in
     -h | --help ) print_help;;
