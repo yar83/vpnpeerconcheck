@@ -18,9 +18,9 @@ set -o errexit
 ######################################################################
 is_valid_input() {
   if [[ $# -eq 1 ]] && [[ $1 == '-h' || $1 == '--help' || $1 =~ ^[1-9]{1}[0-9]{,9}$ ]]; then
-    echo "true"
+    return 0
   else
-    echo "false"
+    return 1
   fi
 }
 
@@ -90,10 +90,7 @@ reverse_bits() {
 }
 
 main() {
-  if [[ $(is_valid_input $@) == "false" ]]; then
-    print_error
-    exit 1
-  fi
+  is_valid_input $@ || print_error 2&>1 && exit 1
 
   case "$1" in
     -h | --help ) print_help;;
