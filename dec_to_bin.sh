@@ -14,7 +14,7 @@ set -o errexit
 # Arguments:
 #   $@ as all arguments passed to script
 # Outputs:
-#   echoes 'true' or 'false'
+#   return 0 when argument is valid otherwise 1
 ######################################################################
 is_valid_input() {
   if [[ $# -eq 1 ]] && [[ $1 =~ (^-h$)|(^--help$)|(^[1-9]{1}[0-9]{0,9}$) ]]; then
@@ -50,7 +50,7 @@ print_help() {
 #   None
 # Arguments:
 #   $1 as decimal number
-# Outputs
+# Outputs:
 #   bits of converted number in backwars state
 ######################################################################
 get_backwards_bits() {
