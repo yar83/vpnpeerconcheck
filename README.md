@@ -4,7 +4,7 @@ A collection of shell scripts for various every day routines and monitoring oper
 [hosts_con_check.sh](#hosts_con_checksh)<br>
 [send_msg_telegram.sh](#send_msg_telegramsh)<br>
 [rand_pass_gen.sh](#rand_pass_gensh)<br>
-[prime_factors.sh](#prime_numberssh)<br>
+[prime_factors.sh](#prime_factorssh)<br>
 [dec_to_bin.sh](#dec_to_binsh)<br>
 [bin_to_dec.sh](#bin_to_decsh)<br>
 
@@ -19,9 +19,9 @@ generate random passphrase with minimun one lowercase, one uppercase, and one di
 - [ ] add argument parser to parse -h or --help as command to pring help
 #### [prime_factors.sh](https://github.com/yar83/shell-service-scripts/blob/main/rand_pass_gen.sh)
 represent entered number as a product of prime numbers, up to the order of factors.
-#### [dec_to_bin.sh(https://github.com/yar83/shell-service-scripts/blob/main/dec_to_bin.sh)
+#### [dec_to_bin.sh](https://github.com/yar83/shell-service-scripts/blob/main/dec_to_bin.sh)
 convert decimal number to binary
-#### [bin_to_dec.sh(https://github.com/yar83/shell-service-scripts/blob/main/bin_to_dec.sh)
+#### [bin_to_dec.sh](https://github.com/yar83/shell-service-scripts/blob/main/bin_to_dec.sh)
 convert binary number to decimal
 
 
