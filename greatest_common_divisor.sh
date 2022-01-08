@@ -17,7 +17,8 @@ check_input() {
 }
 
 main() {
-
+  check_input "$@" || { echo "error"; exit 1; }
+  echo "Input correct"
 }
 
 main "$@"
