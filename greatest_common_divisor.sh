@@ -16,9 +16,17 @@ check_input() {
   return 1
 }
 
+get_gcd() {
+  local -i a="$1"
+  local -i b="$2"
+  
+  echo "$1 $2"
+}
+
 main() {
   check_input "$@" || { echo "error"; exit 1; }
   echo "Input correct"
+  get_gcd "$1" "$2"
 }
 
 main "$@"
