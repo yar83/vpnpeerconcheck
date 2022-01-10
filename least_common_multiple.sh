@@ -17,10 +17,17 @@ check_input() {
   return 1
 }
 
+get_lcm() {
+  local -i a="$1"
+  local -i b="$2"
+
+  echo "$1 $2"
+}
+
 main() {
   check_input "$@" || { echo "error"; exit 1; }
-
-  echo "Input valid"
+  echo "Input correct"
+  get_lcm "$1" "$2"
 }
 
 main "$@"
