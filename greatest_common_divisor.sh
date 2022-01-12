@@ -25,7 +25,6 @@ get_gcd() {
 
 main() {
   check_input "$@" || { echo "error"; exit 1; }
-  echo "Input correct"
   get_gcd "$1" "$2"
 }
 
