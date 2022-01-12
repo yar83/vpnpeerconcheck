@@ -26,7 +26,6 @@ get_lcm() {
 
 main() {
   check_input "$@" || { echo "error"; exit 1; }
-  echo "Input correct"
   get_lcm "$1" "$2"
 }
 
