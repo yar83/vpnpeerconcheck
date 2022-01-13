@@ -1,4 +1,8 @@
 #!/bin/bash
+######################################################################
+# Find greatest common divisor using Euclidean algorithm
+######################################################################
+
 set -o nounset
 set -o errexit
 
