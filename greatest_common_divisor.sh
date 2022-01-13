@@ -31,8 +31,10 @@ get_gcd() {
 }
 
 main() {
+  local -i gcd=1
   check_input "$@" || { echo "error"; exit 1; }
-  get_gcd "$1" "$2"
+  gcd="$(get_gcd "$1" "$2")"
+  echo "$gcd"
 }
 
 main "$@"
