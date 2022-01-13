@@ -1,6 +1,7 @@
 #!/bin/bash
 ######################################################################
-# Find greatest common divisor using Euclidean algorithm
+# Find greatest common divisor of two integers using Euclidean 
+# algorithm
 ######################################################################
 
 set -o nounset
