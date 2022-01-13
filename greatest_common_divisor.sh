@@ -19,8 +19,15 @@ check_input() {
 get_gcd() {
   local -i a="$1"
   local -i b="$2"
-  
-  echo "$1 $2"
+
+  while [[ $a -ne 0 ]] && [[ $b -ne 0 ]]; do
+    if [[ $a -gt b ]]; then
+      a=$(($a%$b))
+    else
+      b=$(($b%$a))
+    fi
+  done 
+  echo $((a+b))
 }
 
 main() {
