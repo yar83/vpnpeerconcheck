@@ -40,12 +40,13 @@ get_lcm() {
   local -i b="$2"
 
   gcd=$(get_gcd "$a" "$b") 
-  echo "$gcd"
+  echo $(($a*$b/$gcd))
 }
 
 main() {
   check_input "$@" || { echo "error"; exit 1; }
-  get_lcm "$1" "$2"
+  lcm=$(get_lcm "$1" "$2")
+  echo "$lcm"
 }
 
 main "$@"
