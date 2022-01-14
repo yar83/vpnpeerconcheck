@@ -1,6 +1,8 @@
 #!/bin/bash
 ######################################################################
 # Find least common multiple of two integers
+#
+# The solution is based on formula LCM(a, b) = (a * b) / GCD(a, b)
 ######################################################################
 
 set -o nounset
