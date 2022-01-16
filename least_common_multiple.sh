@@ -8,6 +8,16 @@
 set -o nounset
 set -o errexit
 
+######################################################################
+# Validate arguments got with script invocation. Only two integers
+# are allowed or one -h || --help string.
+# Globals:
+#   none
+# Arguments:
+#   $@ as all agrument passed with script
+# Outputs:
+#   return 1 || 0 depend of check's result
+######################################################################
 check_input() {
   valid_number_arg='^[1-9]{1}[0-9]{0,9}$'
   valid_help_arg='(^-h$)|(^--help$)'
