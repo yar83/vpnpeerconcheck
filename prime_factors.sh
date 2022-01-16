@@ -18,8 +18,7 @@ set -o errexit
 # Arguments:
 #   $@ as all arguments passed during script run
 # Outputs:
-#   Prints to stdout error message if $@ is not valid data and exit
-#   or pass by execution to next expression of main.
+#   return 1 || 0 depend of check's result
 ######################################################################
 check_input() {
   valid_arg_pattern='(^-h$)|(^--help$)|(^[1-9]{1}[0-9]{0,9}$)'
