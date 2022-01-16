@@ -32,6 +32,10 @@ check_input() {
   return 1
 }
 
+print_error() {
+  echo "Valid input is two integer numbers greater than 0 or -h or --help for help"
+}
+
 get_gcd() {
   local -i a="$1"
   local -i b="$2"
@@ -56,7 +60,7 @@ get_lcm() {
 }
 
 main() {
-  check_input "$@" || { echo "error"; exit 1; }
+  check_input "$@" || { print_error; exit 1; }
   lcm=$(get_lcm "$1" "$2")
   echo "$lcm"
 }
