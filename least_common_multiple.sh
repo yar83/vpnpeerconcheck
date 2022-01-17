@@ -34,6 +34,13 @@ check_input() {
   return 1
 }
 
+print_help() {
+  printf "%s\n%s\n%s\n",\
+    "Find least common multiple of two integers"\
+    "Use $./least_common_multiple.sh 123 456 for normal use or enter arguments"\
+    "-h, --help to dispaly this help and exit."
+}
+
 print_error() {
   echo "Valid input is two integer numbers greater than 0 or -h or --help for help"
 }
