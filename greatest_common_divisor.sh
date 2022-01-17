@@ -44,7 +44,11 @@ get_gcd() {
 main() {
   local -i gcd=1
   check_input "$@" || { echo "error"; exit 1; }
-  gcd="$(get_gcd "$1" "$2")"
+
+  case "$1" in
+    -h | --help ) print_help; exit 0;;
+    * ) gcd="$(get_gcd "$1" "$2")";;
+  esac
   echo "$gcd"
 }
 
