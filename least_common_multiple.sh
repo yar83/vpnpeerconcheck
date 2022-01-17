@@ -73,7 +73,7 @@ main() {
 
   case "$1" in
     -h | --help ) print_help; exit 0;;
-    * ) lcm=$(get_lcm "$1" "$2")
+    * ) lcm=$(get_lcm "$1" "$2");;
   esac
 
   echo "$lcm"
