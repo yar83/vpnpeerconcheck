@@ -70,7 +70,12 @@ get_lcm() {
 
 main() {
   check_input "$@" || { print_error; exit 1; }
-  lcm=$(get_lcm "$1" "$2")
+
+  case "$1" in
+    -h | --help ) print_help; exit 0;;
+    * ) lcm=$(get_lcm "$1" "$2")
+  esac
+
   echo "$lcm"
 }
 
