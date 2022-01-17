@@ -20,6 +20,12 @@ check_input() {
 
   return 1
 }
+print_help() {
+  printf "%s\n%s\n%s\n",\
+    "Find greatest common divisor of two integers"\
+    "Use $./greatest_common_divisor.sh 123 456 for normal use or enter arguments"\
+    "-h, --help to dispaly this help and exit."
+}
 
 get_gcd() {
   local -i a="$1"
