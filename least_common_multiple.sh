@@ -67,6 +67,7 @@ get_lcm() {
 }
 
 main() {
+  local -i lcm
   check_input "$@" || { print_error; exit 1; }
 
   case "$1" in
