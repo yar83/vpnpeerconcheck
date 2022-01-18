@@ -5,8 +5,6 @@
 # The solution is based on formula LCM(a, b) = (a * b) / GCD(a, b)
 ######################################################################
 
-# TODO(yar83): add print_help function
-
 set -o nounset
 set -o errexit
 
