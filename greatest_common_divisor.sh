@@ -38,6 +38,10 @@ print_help() {
     "-h, --help to dispaly this help and exit."
 }
 
+print_error() {
+  echo "Valid input is two integer numbers greater than 0 or -h or --help for help"
+}
+
 get_gcd() {
   local -i a="$1"
   local -i b="$2"
@@ -54,7 +58,7 @@ get_gcd() {
 
 main() {
   local -i gcd=1
-  check_input "$@" || { echo "error"; exit 1; }
+  check_input "$@" || { print_error; exit 1; }
 
   case "$1" in
     -h | --help ) print_help; exit 0;;
