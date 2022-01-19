@@ -43,6 +43,15 @@ print_error() {
   echo "Valid input is two integer numbers greater than 0 or -h or --help for help"
 }
 
+######################################################################
+# Get GCD of two integers using Euclidean algorithm
+# Globals:
+#   none
+# Arguments:
+#   $1, $2 as agruments passed with script
+# Outputs:
+#   return GCD of two argument integers
+######################################################################
 get_gcd() {
   local -i a="$1"
   local -i b="$2"
