@@ -48,7 +48,7 @@ print_error() {
 # Globals:
 #   none
 # Arguments:
-#   $1, $2 as agruments passed with script
+#   $1, $2 as arguments passed with func incovation from get_lcm()
 # Outputs:
 #   return GCD of two argument integers
 ######################################################################
@@ -66,6 +66,15 @@ get_gcd() {
   echo $((a+b))
 }
 
+######################################################################
+# Get LCM with formula LCM(a, b) = (a * b) / GCD(a, b)
+# Globals:
+#   None
+# Arguments:
+#   $1, $2 as agruments passed with script
+# Outputs:
+#   return LCM of two argument integers
+######################################################################
 get_lcm() {
   local -i gcd=1
   local -i a="$1"
