@@ -27,8 +27,12 @@ check_input() {
   return 1
 }
 
+print_error() {
+  printf "%s\n" "Only one positive integer as upper limit of numbers is valid or -h or --help for help"
+}
+
 main() {
-  check_input "$@" || { echo "bad arg"; exit 1; }
+  check_input "$@" || { print_error; exit 1; }
   echo "good $@"
 }
 
