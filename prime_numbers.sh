@@ -32,15 +32,19 @@ print_error() {
 }
 
 print_help() {
-  printf "%s\n%s\n%s\n",\
-    "Find prime numbers up to script argument number"\
+  printf "%s\n%s\n%s\n"\
+    "Find prime numbers up to script's argument number"\
     "Use $./prime_numbers.sh 123456 for normal use or enter arguments"\
     "-h, --help to dispaly this help and exit."
 }
 
 main() {
   check_input "$@" || { print_error; exit 1; }
-  echo "good $@"
+
+  case "$1" in
+    -h | --help ) print_help; exit 0;;
+    * ) echo "there will be primes";;
+  esac
 }
 
 main "$@"
