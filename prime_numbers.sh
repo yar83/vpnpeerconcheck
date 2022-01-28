@@ -31,6 +31,13 @@ print_error() {
   printf "%s\n" "Only one positive integer as upper limit of numbers is valid or -h or --help for help"
 }
 
+print_help() {
+  printf "%s\n%s\n%s\n",\
+    "Find prime numbers up to script argument number"\
+    "Use $./prime_numbers.sh 123456 for normal use or enter arguments"\
+    "-h, --help to dispaly this help and exit."
+}
+
 main() {
   check_input "$@" || { print_error; exit 1; }
   echo "good $@"
