@@ -38,12 +38,27 @@ print_help() {
     "-h, --help to dispaly this help and exit."
 }
 
+######################################################################
+# Get prime numbers up to limit got as script's argument using
+# sieve of Eratosthenes algorithm.
+# Globals:
+#  none
+# Arguments:
+#   $1 as upper limit of natural numbrs row
+# Output:
+#   Formatted output of prime numbers
+######################################################################
+get_primes() {
+  local -i upper_lim=$1
+  echo "Upper limit is $upper_lim"
+}
+
 main() {
   check_input "$@" || { print_error; exit 1; }
 
   case "$1" in
     -h | --help ) print_help; exit 0;;
-    * ) echo "there will be primes";;
+    * ) get_primes $1;;
   esac
 }
 
