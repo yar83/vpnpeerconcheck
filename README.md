@@ -8,6 +8,7 @@ A collection of shell scripts for various every day routines and monitoring oper
 [dec_to_bin.sh](#dec_to_binsh)<br>
 [bin_to_dec.sh](#bin_to_decsh)<br>
 [greatest_common_divisor.sh](#greatest_common_divisorsh)<br>
+[least_common_multiple.sh](#least_common_multiplesh)<br>
 
 #### [hosts_con_check.sh](https://github.com/yar83/shell-service-scripts/blob/main/hosts_con_check.sh)
 continuously check connection to each host from array of hosts, log data and send corresponding messages to Telegram.
@@ -31,3 +32,5 @@ convert decimal number to binary
 convert binary number to decimal
 #### [greatest_common_divisor.sh](https://github.com/yar83/shell-service-scripts/blob/main/greatest_common_divisor.sh)
 find greatest common divisor of two positive numbers
+#### [least_common_multiple.sh](https://github.com/yar83/shell-service-scripts/blob/main/least_common_multiple.sh)
+find least common multiple of two positive numbers
