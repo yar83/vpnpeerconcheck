@@ -9,6 +9,7 @@ A collection of shell scripts for various every day routines and monitoring oper
 [bin_to_dec.sh](#bin_to_decsh)<br>
 [greatest_common_divisor.sh](#greatest_common_divisorsh)<br>
 [least_common_multiple.sh](#least_common_multiplesh)<br>
+[prime_numbers.sh](#prime_numberssh)<br>
 
 #### [hosts_con_check.sh](https://github.com/yar83/shell-service-scripts/blob/main/hosts_con_check.sh)
 continuously check connection to each host from array of hosts, log data and send corresponding messages to Telegram.
@@ -34,3 +35,5 @@ convert binary number to decimal
 find greatest common divisor of two positive numbers
 #### [least_common_multiple.sh](https://github.com/yar83/shell-service-scripts/blob/main/least_common_multiple.sh)
 find least common multiple of two positive numbers
+#### [prime_numbers.sh](https://github.com/yar83/shell-service-scripts/blob/main/prime_numbers.sh)
+find sequence of prime numbers from 2 up to entered number with Sieve of Eratosthenes algorithm
