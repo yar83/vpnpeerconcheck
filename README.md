@@ -7,6 +7,7 @@ A collection of shell scripts for various every day routines and monitoring oper
 [prime_factors.sh](#prime_factorssh)<br>
 [dec_to_bin.sh](#dec_to_binsh)<br>
 [bin_to_dec.sh](#bin_to_decsh)<br>
+[greatest_common_divisor.sh](#greatest_common_divisorsh)<br>
 
 #### [hosts_con_check.sh](https://github.com/yar83/shell-service-scripts/blob/main/hosts_con_check.sh)
 continuously check connection to each host from array of hosts, log data and send corresponding messages to Telegram.
@@ -28,3 +29,5 @@ represent entered number as a product of prime numbers, up to the order of facto
 convert decimal number to binary
 #### [bin_to_dec.sh](https://github.com/yar83/shell-service-scripts/blob/main/bin_to_dec.sh)
 convert binary number to decimal
+#### [greatest_common_divisor.sh](https://github.com/yar83/shell-service-scripts/blob/main/greatest_common_divisor.sh)
+find greatest common divisor of two positive numbers
