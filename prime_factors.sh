@@ -4,9 +4,6 @@
 # order of factors. For example, N = 1164 = 2 * 2 * 3 * 97
 ######################################################################
 
-# TODO(yar83): Add check whether bc is installed
-# TODO(yar83): Find limit of valid integer to pass as arg
-
 set -o nounset
 set -o errexit
 
