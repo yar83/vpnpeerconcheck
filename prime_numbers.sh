@@ -64,6 +64,7 @@ get_primes() {
     fi
   done
   
+  #formatted output of prime numbers
   local -i counter=0
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[i] -ne 0 ]]; then
