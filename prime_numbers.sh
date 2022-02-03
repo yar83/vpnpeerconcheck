@@ -50,7 +50,12 @@ print_help() {
 ######################################################################
 get_primes() {
   local -i upper_lim=$1
+  local -a natural_nums
   echo "Upper limit is $upper_lim"
+  for (( i=0; i<$((upper_lim-1)); i++ )); do
+    natural_nums[$i]=$((i+2))
+  done
+  echo "${natural_nums[@]}"
 }
 
 main() {
