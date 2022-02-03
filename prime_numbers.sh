@@ -52,10 +52,12 @@ get_primes() {
   local -i upper_lim=$1
   local -a natural_nums
   echo "Upper limit is $upper_lim"
+
   for (( i=0; i<$((upper_lim-1)); i++ )); do
     natural_nums[$i]=$((i+2))
   done
-
+  
+  # sieve mechanism 
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[$i] -ne 0 ]]; then
       for (( j=$((i+natural_nums[$i])); j<$((upper_lim)); j+=natural_nums[$i] )); do
@@ -64,7 +66,7 @@ get_primes() {
     fi
   done
   
-  #formatted output of prime numbers
+  # formatted output of prime numbers
   local -i counter=0
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[i] -ne 0 ]]; then
