@@ -5,6 +5,9 @@
 # Eratosthenes algorithm
 #####################################################################
 
+#TODO(yar83): implement full fledged formatted output with adjusted
+# width of numbers
+
 set -o nounset
 set -o errexit
 
