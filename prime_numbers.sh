@@ -64,7 +64,10 @@ get_primes() {
     fi
   done
   
-  echo "${natural_nums[@]}"
+  echo $upper_lim
+  for (( i=0; i<$((upper_lim)); i++ )); do
+    [[ natural_nums[i] -ne 0 ]] && echo "${natural_nums[$i]}"
+  done
 }
 
 main() {
