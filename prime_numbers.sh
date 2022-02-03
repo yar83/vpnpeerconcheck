@@ -52,7 +52,8 @@ get_primes() {
   local -i upper_lim=$1
   local -a natural_nums
   echo "Upper limit is $upper_lim"
-
+  
+  # fill array with natural row numbers
   for (( i=0; i<$((upper_lim-1)); i++ )); do
     natural_nums[$i]=$((i+2))
   done
