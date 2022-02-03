@@ -55,6 +55,12 @@ get_primes() {
   for (( i=0; i<$((upper_lim-1)); i++ )); do
     natural_nums[$i]=$((i+2))
   done
+
+  for (( i=0; i<$((upper_lim-1)); i++ )); do
+    if [[ natural_nums[$i]%2 -eq 0 ]]; then
+      natural_nums[$i]=0
+    fi
+  done
   echo "${natural_nums[@]}"
 }
 
