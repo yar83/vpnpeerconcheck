@@ -64,10 +64,18 @@ get_primes() {
     fi
   done
   
-  echo $upper_lim
+  local -i counter=0
   for (( i=0; i<$((upper_lim)); i++ )); do
-    [[ natural_nums[i] -ne 0 ]] && echo "${natural_nums[$i]}"
+    if [[ natural_nums[i] -ne 0 ]]; then
+      counter=$((counter+1))
+      if [[ $((counter%10)) -eq 0 ]]; then
+        echo "${natural_nums[$i]}"
+      else
+        echo -n "${natural_nums[$i]} "
+      fi
+    fi
   done
+  echo ""
 }
 
 main() {
