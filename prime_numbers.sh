@@ -6,7 +6,7 @@
 #####################################################################
 
 #TODO(yar83): implement full fledged formatted output with adjusted
-# width of numbers
+# width of numbers using length of highest prime number.
 
 set -o nounset
 set -o errexit
@@ -76,9 +76,9 @@ get_primes() {
     if [[ natural_nums[i] -ne 0 ]]; then
       counter=$((counter+1))
       if [[ $((counter%20)) -eq 0 ]]; then
-        printf "%5s\n" "${natural_nums[$i]}"
+        printf "%6s\n" "${natural_nums[$i]}"
       else
-        printf "%5s" "${natural_nums[$i]} "
+        printf "%6s" "${natural_nums[$i]}"
       fi
     fi
   done
