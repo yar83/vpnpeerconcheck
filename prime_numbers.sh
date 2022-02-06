@@ -76,9 +76,9 @@ get_primes() {
     if [[ natural_nums[i] -ne 0 ]]; then
       counter=$((counter+1))
       if [[ $((counter%20)) -eq 0 ]]; then
-        printf '%s\n' "${natural_nums[$i]}"
+        printf "%4s\n" "${natural_nums[$i]}"
       else
-        printf '%s' "${natural_nums[$i]} "
+        printf "%4s" "${natural_nums[$i]} "
       fi
     fi
   done
