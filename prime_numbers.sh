@@ -75,10 +75,10 @@ get_primes() {
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[i] -ne 0 ]]; then
       counter=$((counter+1))
-      if [[ $((counter%10)) -eq 0 ]]; then
-        printf "%s\n" "${natural_nums[$i]}"
+      if [[ $((counter%20)) -eq 0 ]]; then
+        printf '%s\n' "${natural_nums[$i]}"
       else
-        printf "%s" "${natural_nums[$i]} "
+        printf '%s' "${natural_nums[$i]} "
       fi
     fi
   done
