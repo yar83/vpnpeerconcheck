@@ -5,9 +5,6 @@
 # Eratosthenes algorithm
 #####################################################################
 
-#TODO(yar83): implement full fledged formatted output with adjusted
-# width of numbers using length of highest prime number.
-
 set -o nounset
 set -o errexit
 
