@@ -72,13 +72,14 @@ get_primes() {
   
   # formatted output of prime numbers
   local -i counter=0
+  local -i num_len=${#upper_lim}
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[i] -ne 0 ]]; then
       counter=$((counter+1))
       if [[ $((counter%20)) -eq 0 ]]; then
-        printf "%6s\n" "${natural_nums[$i]}"
+        printf "%${num_len}s\n" "${natural_nums[$i]}"
       else
-        printf "%6s" "${natural_nums[$i]}"
+        printf "%${num_len}s" "${natural_nums[$i]}"
       fi
     fi
   done
