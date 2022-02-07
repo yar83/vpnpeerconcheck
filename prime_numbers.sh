@@ -39,6 +39,16 @@ print_help() {
 }
 
 ######################################################################
+# Dialog with user to inform him about potentially too much
+# consumption of computing time of primes with upper limit more than
+# 10000 and getting his accept of reject to procceed
+######################################################################
+too_long_dialog() {
+  echo "Upper limit is too high. Computing may take too much time."
+  echo "Do you want to proceed? Enter y/n: "
+}
+
+######################################################################
 # Get prime numbers up to limit got as script's argument using
 # sieve of Eratosthenes algorithm.
 # Globals:
@@ -85,6 +95,8 @@ get_primes() {
 
 main() {
   check_input "$@" || { print_error; exit 1; }
+
+  [[ $1 -gt 10 ]] && { too_long_dialog; }
 
   case "$1" in
     -h | --help ) print_help; exit 0;;
