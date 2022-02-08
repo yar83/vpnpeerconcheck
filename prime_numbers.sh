@@ -69,6 +69,9 @@ too_long_dialog() {
 get_primes() {
   local -i upper_lim=$1
   local -a natural_nums
+  local -i num_len=0
+  local -i counter=0
+
   echo "Upper limit is $upper_lim"
   
   # fill array with natural row numbers
@@ -84,10 +87,18 @@ get_primes() {
       done
     fi
   done
-  
+
+  # get length of last prime number
+  for (( i=$upper_lim; i>0; i-- )); do
+    if [[ natural_nums[$i] -ne 0 ]]; then
+      num_len=$((${#natural_nums[$i]}+1))
+      break
+    fi
+  done
+
+  echo $num_len
+
   # formatted output of prime numbers
-  local -i counter=0
-  local -i num_len=${#upper_lim}
   for (( i=0; i<$((upper_lim)); i++ )); do
     if [[ natural_nums[i] -ne 0 ]]; then
       counter=$((counter+1))
