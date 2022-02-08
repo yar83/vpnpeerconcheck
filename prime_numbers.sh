@@ -44,8 +44,16 @@ print_help() {
 # 10000 and getting his accept of reject to procceed
 ######################################################################
 too_long_dialog() {
+  local ans=''
   echo "Upper limit is too high. Computing may take too much time."
-  echo "Do you want to proceed? Enter y/n: "
+  while [[ !($ans =~ (^y$)|(^n$)) ]]; do
+    read -p "Do you want to proceed? Enter y/n: " ans
+    [[ !($ans =~ (^y$)|(^n$)) ]] && echo "Only 'y' or 'n' is acceptable"
+  done
+  if [[ $ans == "y" ]]; then 
+    return 0
+  fi
+  return 1
 }
 
 ######################################################################
