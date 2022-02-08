@@ -103,8 +103,8 @@ get_primes() {
 
 main() {
   check_input "$@" || { print_error; exit 1; }
-
-  [[ $1 -gt 10 ]] && { too_long_dialog; }
+  
+  [[ $1 -gt 10000 ]] && { too_long_dialog || { echo "OK, let's save your time"; exit 1; } }
 
   case "$1" in
     -h | --help ) print_help; exit 0;;
