@@ -66,7 +66,7 @@ function generate_string() {
 # Outputs:
 #   Return "true" or "false" as a result of checking 
 ####################################################
-function is_first_arg_valid() {
+function is_input_valid() {
   if [[ $1 =~ ^[6-9]|[1-2][0-9]|30$ ]]; then
     echo "true"
   else 
@@ -74,22 +74,25 @@ function is_first_arg_valid() {
   fi
 }
 
+<<comment
 print_help() {
     "Generate a password string of 8 characters as default
     length consists of minimum one digit, one lower and
     one upper case letter.
     use $./rand_pass_gen.sh 20 to set arbitrary password length"
 }
+comment
+
 
 function main() {
-  print_help
+  #print_help
 
   if [[ ${#@} -eq 0 ]]; then 
     generate_string
     exit 0
   fi
 
-  if [[ $(is_first_arg_valid "$1") =~ "true" ]]; then
+  if [[ $(is_input_valid "$1") =~ "true" ]]; then
     generate_string "$1"
     exit 0
   else
