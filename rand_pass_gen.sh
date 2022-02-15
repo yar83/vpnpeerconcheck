@@ -74,7 +74,16 @@ function is_first_arg_valid() {
   fi
 }
 
+print_help() {
+    "Generate a password string of 8 characters as default
+    length consists of minimum one digit, one lower and
+    one upper case letter.
+    use $./rand_pass_gen.sh 20 to set arbitrary password length"
+}
+
 function main() {
+  print_help
+
   if [[ ${#@} -eq 0 ]]; then 
     generate_string
     exit 0
