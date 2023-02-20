@@ -57,9 +57,9 @@ get_gcd() {
 
   while [[ $a -ne 0 ]] && [[ $b -ne 0 ]]; do
     if [[ $a -gt b ]]; then
-      a=$(($a%$b))
+      a=$((a%b))
     else
-      b=$(($b%$a))
+      b=$((b%a))
     fi
   done 
   echo $((a+b))

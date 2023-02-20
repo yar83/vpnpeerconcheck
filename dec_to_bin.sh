@@ -84,17 +84,17 @@ reverse_bits() {
   local -i backwards_bits_len=${#1};
   local bits=""
   for ((i = (backwards_bits_len - 1); i >= 0; i--)); do
-    bits=$bits$(echo ${backwards_bits:i:1})
+    bits="$bits${backwards_bits:i:1})"
   done
-  echo $bits
+  echo "$bits"
 }
 
 main() {
-  is_valid_input $@ || { print_error; exit 1; }
+  is_valid_input "$@" || { print_error; exit 1; }
 
   case "$1" in
     -h | --help ) print_help;;
-    * ) echo $(reverse_bits $(get_backwards_bits "$1"));;
+    * ) echo "$(reverse_bits "$(get_backwards_bits "$1")")";;
   esac
   
   exit 0

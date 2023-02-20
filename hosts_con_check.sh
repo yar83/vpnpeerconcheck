@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# TODO(yar83): add detailed description
-
 set -o nounset
 set -o errexit
+set -e -o pipefail
 
 #--- script flags start ---#
 VERBOSE="" # verbose mode
@@ -11,14 +10,18 @@ VERBOSE="" # verbose mode
 
 PARAMS=""
 LOGFILE=/etc/wireguard/peersconnection.log
+LAST_IPS_LIST_ACCESS=""
+SELF="" # path to script file
+SELFPATH="" # path to script's folder
 
 #--- Constants start ---#
 readonly PINGCOUNT=1
 readonly PINGTIMEOUT=2
 readonly MAX_OFFLINE_PERIOD=60 # maximum host offline time in seconds before sending a warning message
+readonly E_WRONG_ARGS=95 # Wrong arguments error
 #--- Constants end ---#
 
-declare -A IPs IPs_off
+declare -A IPNAMEs IPs IPs_off
 
 ######################################################################
 # Parse options set with script invocation
@@ -46,7 +49,7 @@ get_options() {
         printf "%s\n" "Verbose mode on"
         ;;
       -c | --colored)
-        COLOREDOUT=0
+        # COLOREDOUT=0
         PARAMS="$PARAMS $1"
         shift
         printf "%s\n" "Colored output mode on"
@@ -61,7 +64,7 @@ get_options() {
           exit 1
         fi
         ;;
-      -* | --*)
+      --* | -*)
         printf "%s\n" "Error: unsupported flag $1 Try '$0 -h' or '$0 --help' to print help" >&2
         exit 1
         ;;
@@ -86,6 +89,36 @@ print_help() {
 }
 
 ######################################################################
+# Stop script execution with error message
+######################################################################
+die() {
+  echo "$*" >&2
+  exit "$E_WRONG_ARGS"
+}
+
+
+######################################################################
+# Parse IP addresses and host names from ip-addresses.list file.
+# Form associated array IPNAMEs where keys equal to IP addresses
+# and values equal to hosts' names.
+######################################################################
+parse_ips_list() {
+  if [[ -e "$SELFPATH"ip-addresses.list ]]; then
+    LAST_IPS_LIST_ACCESS=$(stat -c "%Y" "$SELFPATH"ip-addresses.list)
+    while read -r line; do
+      if [[ $line =~ ^(#)*[[:space:]]*(([0-9]{1,3}\.){3}[0-9]{1,3})[[:space:]]*([[:alnum:]]*) ]]; then
+        if [[ ${BASH_REMATCH[1]} != "#" ]]; then
+          [[ ${BASH_REMATCH[4]} == "" ]] && BASH_REMATCH[4]="noname"
+          IPNAMEs["${BASH_REMATCH[2]}"]="${BASH_REMATCH[4]}"
+        fi
+      fi
+    done < "$SELFPATH"ip-addresses.list
+  else
+    die "There is no IP addresses list file" "$E_WRONG_ARGS"
+  fi
+}
+
+######################################################################
 # Write '__________ New day: $(date "+%d.%m.%Y %H:%M") _________' to logfile
 # each midnight to visually separate log data one day from another.
 # Globals:
@@ -101,6 +134,7 @@ next_day_stamp() {
 	if (( $(date --date="$today" "+%s") < $(date --date="$(date "+%D")" "+%s") )) ; then
 		echo "__________ New day: $(date "+%d.%m.%Y %H:%M") _________" >> "$LOGFILE"
 		today=$(date "+%D")
+    "$SELFPATH"send_msg_telegram.sh "Script is working properly $(date "+%d.%m.%Y %H:%M:%S")"
 	fi
 }
 
@@ -122,15 +156,15 @@ next_day_stamp() {
 set_init_state() {
   if /bin/ping -c${PINGCOUNT} -w${PINGTIMEOUT} "$1" > /dev/null; then
     IPs[$1]="on"
-    echo "Box $1 initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+    echo "Host ${IPNAMEs[$1]} ($1) initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     if [[ $VERBOSE ]] ; then
-      printf "%s\n" "Box $1 initial state is online"
+      printf "%s\n" "Host ${IPNAMEs[$1]} ($1) initial state is online"
     fi
   else
     IPs[$1]="off"
-    echo "Box $1 initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+    echo "Host ${IPNAMEs[$1]} ($1) initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     if [[ $VERBOSE ]] ; then
-      printf "%s\n" "Box $1 initial state is offline"
+      printf "%s\n" "Host ${IPNAMEs[$1]} ($1) initial state is offline"
     fi
   fi
 }
@@ -164,26 +198,26 @@ check_con() {
       # Set current IP as being online
       IPs[$1]="on"  
       if [[ $VERBOSE ]]; then
-        printf "%s\n" "Box $1 now online, was offline"
+        printf "%s\n" "Host ${IPNAMEs[$1]} ($1) now online, was offline"
       fi
       # If $1 unset in IPs_off array that means that it's been deleted after long time offline check.
       # If $1 is present in IPs_off array that means that max offline time not expired and $1 is being deleted now.
       if [[ -z ${IPs_off[$1]:-} ]]; then
         if [[ $VERBOSE ]]; then
-          printf "%s\n" "$1 now online. Was offline more than $MAX_OFFLINE_PERIOD seconds"
+          printf "%s\n" "Host ${IPNAMEs[$1]} ($1) now online. Was offline more than $MAX_OFFLINE_PERIOD seconds"
         fi
-        if [[ -x send_msg_telegram.sh ]]; then
-          ./send_msg_telegram.sh "$1 now online. Was offline more than $MAX_OFFLINE_PERIOD seconds"
+        if [[ -x "$SELFPATH"send_msg_telegram.sh ]]; then
+          "$SELFPATH"send_msg_telegram.sh "Host ${IPNAMEs[$1]} ($1) now online. Was offline more than $MAX_OFFLINE_PERIOD seconds"
         else
-          printf "%s\n" "No sending message script" &>2
+          printf "%s\n" "No sending message script" >&2
         fi
       else
-        unset IPs_off[$1]
+        unset "IPs_off[$1]"
       fi
-      echo "Box $1 is online from offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+      echo "Host ${IPNAMEs[$1]} ($1) is online from offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     else
       if [[ $VERBOSE ]]; then
-        printf "%s\n" "Box $1 is still online"
+        printf "%s\n" "Host ${IPNAMEs[$1]} ($1) is still online"
       fi
     fi
   else
@@ -193,48 +227,65 @@ check_con() {
       # Set current IP as being offline
       IPs[$1]="off"
       if [[ $VERBOSE ]]; then
-        printf "%s\n" "$1 now offline, was online"
+        printf "%s\n" "${IPNAMEs[$1]} ($1) now offline, was online"
       fi
-      echo "Box $1 is offline from online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+      echo "Host ${IPNAMEs[$1]} ($1) is offline from online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
     else
       if [[ $VERBOSE ]]; then
-        printf "%s\n" "Box $1 is still offline"
+        printf "%s\n" "Host ${IPNAMEs[$1]} ($1) is still offline"
       fi
       # check offline timeout period
       if [[ -n ${IPs_off[$1]:-} && $(( $(date +%s) - $(date --date="${IPs_off[$1]}" +%s) )) -ge $MAX_OFFLINE_PERIOD ]]; then
-        unset IPs_off[$1]
+        unset "IPs_off[$1]"
         if [[ $VERBOSE ]]; then
-          printf "%s\n" "$1 offline more than $MAX_OFFLINE_PERIOD seconds"
+          printf "%s\n" "Host ${IPNAMEs[$1]} ($1) offline more than $MAX_OFFLINE_PERIOD seconds"
         fi
-        if [[ -x send_msg_telegram.sh ]]; then
-          ./send_msg_telegram.sh "$1 offline more than $MAX_OFFLINE_PERIOD seconds"
+        if [[ -x "$SELFPATH"send_msg_telegram.sh ]]; then
+          "$SELFPATH"send_msg_telegram.sh "Host ${IPNAMEs[$1]} ($1) offline more than $MAX_OFFLINE_PERIOD seconds"
         else
-          printf "%s\n" "No sending message script" &>2
+          printf "%s\n" "No sending message script" >&2
         fi
       fi
     fi
   fi 
 }
 
-main() {
-  local ip
-
-  get_options "$@"
-  echo "<------Script started $(date '+%d.%m.%Y %H:M:%S') ----->" >> "$LOGFILE"
-  today=$(date +%D)
-  if [[ $VERBOSE ]]; then
-    printf "%s\n" "Log file path is $LOGFILE"
-  fi
-  
-  #IPs_array_build <-- function to build array of IPs (will be write)
-  IPs=(["10.0.0.2"]="on" ["10.0.0.7"]="on" ["10.0.0.8"]="on" ["10.0.0.9"]="on" ["10.0.0.10"]="on")
+set_actual_ips() {
+  for ip_addr in "${!IPNAMEs[@]}"; do
+    IPs["$ip_addr"]="on"
+  done
 
   # set initial status of each IP addr
   for ip in "${!IPs[@]}"; do
     set_init_state $ip
   done
+}
+
+main() {
+  local ip start_date=$(date '+%d.%m.%Y %H:%M:%S')
+
+  SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+  SELFPATH="${SELF%/*}/"
+
+  get_options "$@"
+  echo "<------Script started $start_date ----->" >> "$LOGFILE"
+  "$SELFPATH"send_msg_telegram.sh "Monitoring started at $(date '+%d.%m.%Y %H:%M:%S')"
+  today=$(date +%D)
+  if [[ $VERBOSE ]]; then
+    printf "%s\n" "Log file path is $LOGFILE"
+  fi
+
+  parse_ips_list
+  set_actual_ips
 
   while :; do
+    if [[ $LAST_IPS_LIST_ACCESS != $(stat -c "%Y" "$SELFPATH"ip-addresses.list) ]]; then
+      echo "IP addresses list was changed since last access"
+      echo "IP addresses list was changed since last access $(date '+%d.%m.%Y %H:%M:%S')" >> peersconnection.log
+      parse_ips_list
+      "$SELFPATH"send_msg_telegram.sh "IP list was changed since last access. New list loaded."
+      set_actual_ips
+    fi
     next_day_stamp
     for ip in "${!IPs[@]}"; do
       check_con $ip
