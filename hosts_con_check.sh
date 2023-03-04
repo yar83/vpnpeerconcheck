@@ -262,7 +262,8 @@ set_actual_ips() {
 }
 
 main() {
-  local ip start_date=$(date '+%d.%m.%Y %H:%M:%S')
+  local ip start_date
+  start_date=$(date '+%d.%m.%Y %H:%M:%S')
 
   SELF="$(readlink -f "${BASH_SOURCE[0]}")"
   SELFPATH="${SELF%/*}/"
