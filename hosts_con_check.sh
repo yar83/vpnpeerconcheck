@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO(yar83): add detailed description
+
 set -o nounset
 set -o errexit
 set -e -o pipefail
@@ -10,7 +12,7 @@ VERBOSE="" # verbose mode
 
 PARAMS=""
 LOGFILE=/etc/wireguard/peersconnection.log
-LAST_IPS_LIST_ACCESS=""
+LAST_IPS_LIST_ACCESS="" # Moment of last reading of ip list file in seconds since epoch
 SELF="" # path to script file
 SELFPATH="" # path to script's folder
 
@@ -99,8 +101,7 @@ die() {
 
 ######################################################################
 # Parse IP addresses and host names from ip-addresses.list file.
-# Form associated array IPNAMEs where keys equal to IP addresses
-# and values equal to hosts' names.
+# Generate associated array IPNAMEs: [ip_address: host_name]
 ######################################################################
 parse_ips_list() {
   if [[ -e "$SELFPATH"ip-addresses.list ]]; then
@@ -138,6 +139,12 @@ next_day_stamp() {
 	fi
 }
 
+set_actual_ips() {
+  for ip in "${!IPNAMEs[@]}"; do
+    IPs["$ip"]="on"
+  done
+}
+
 ######################################################################
 # Set initial state 'online/offline' of each host 
 # Globals:
@@ -154,19 +161,21 @@ next_day_stamp() {
 #	  None
 ######################################################################
 set_init_state() {
-  if /bin/ping -c${PINGCOUNT} -w${PINGTIMEOUT} "$1" > /dev/null; then
-    IPs[$1]="on"
-    echo "Host ${IPNAMEs[$1]} ($1) initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
-    if [[ $VERBOSE ]] ; then
-      printf "%s\n" "Host ${IPNAMEs[$1]} ($1) initial state is online"
+  for ip in "${!IPs[@]}"; do
+    if /bin/ping -c${PINGCOUNT} -w${PINGTIMEOUT} "$ip" > /dev/null; then
+      IPs[$ip]="on"
+      echo "Host ${IPNAMEs[$ip]} ($ip) initial state is online $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+      if [[ $VERBOSE ]]; then
+        printf "%s\n" "Host ${IPNAMEs[$ip]} ($ip) initial state is online"
+      fi
+    else
+      IPs[$ip]="off"
+      echo "Host ${IPNAMEs[$ip]} ($ip) initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
+      if [[ $VERBOSE ]]; then
+        printf "%s\n" "Host ${IPNAMEs[$ip]} ($ip) initial state is offline"
+      fi
     fi
-  else
-    IPs[$1]="off"
-    echo "Host ${IPNAMEs[$1]} ($1) initial state is offline $(date +"%d.%m.%Y %H:%M:%S")" >> "$LOGFILE"
-    if [[ $VERBOSE ]] ; then
-      printf "%s\n" "Host ${IPNAMEs[$1]} ($1) initial state is offline"
-    fi
-  fi
+  done
 }
 
 ######################################################################
@@ -250,20 +259,22 @@ check_con() {
   fi 
 }
 
-set_actual_ips() {
-  for ip_addr in "${!IPNAMEs[@]}"; do
-    IPs["$ip_addr"]="on"
-  done
-
-  # set initial status of each IP addr
+report_init_hosts_state() {
+  local msg
+  msg=""
+  "$SELFPATH"send_msg_telegram.sh "${!IPNAMEs[*]}"
   for ip in "${!IPs[@]}"; do
-    set_init_state $ip
+    if [[ -z $msg ]]; then
+      msg=$(echo "${IPNAMEs[$ip]}($ip): ${IPs[$ip]}")
+    else
+      msg=$(echo "$msg%0A${IPNAMEs[$ip]}($ip): ${IPs[$ip]}")
+    fi
   done
+  "$SELFPATH"send_msg_telegram.sh "Initial hosts state:%0A$msg"
 }
 
 main() {
-  local ip start_date
-  start_date=$(date '+%d.%m.%Y %H:%M:%S')
+  local ip start_date=$(date '+%d.%m.%Y %H:%M:%S')
 
   SELF="$(readlink -f "${BASH_SOURCE[0]}")"
   SELFPATH="${SELF%/*}/"
@@ -278,14 +289,22 @@ main() {
 
   parse_ips_list
   set_actual_ips
+  set_init_state
+  report_init_hosts_state
 
   while :; do
     if [[ $LAST_IPS_LIST_ACCESS != $(stat -c "%Y" "$SELFPATH"ip-addresses.list) ]]; then
       echo "IP addresses list was changed since last access"
       echo "IP addresses list was changed since last access $(date '+%d.%m.%Y %H:%M:%S')" >> peersconnection.log
+      # reset arrays with ip and hostnames data
+      unset IPNAMEs IPs IPs_off
+      # redeclage them globally
+      declare -gA IPNAMEs IPs IPs_off
       parse_ips_list
       "$SELFPATH"send_msg_telegram.sh "IP list was changed since last access. New list loaded."
       set_actual_ips
+      set_init_state
+      report_init_hosts_state
     fi
     next_day_stamp
     for ip in "${!IPs[@]}"; do
